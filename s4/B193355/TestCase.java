@@ -33,20 +33,42 @@ public class TestCase {
 	    FrequencerInterface  myObject;
 	    int freq;
 
-	    //Black box test
 	    System.out.println("checking s4.B193355.Frequencer");
-	    //TARGET is not set(White box test)
-	    myObject = new s4.B193355.Frequencer();
-	    myObject.setSpace("Hi Ho Hi Ho".getBytes());
-	    //myObject.setTarget("H".getBytes());
-	    freq = myObject.frequency();
-	    System.out.print("\"H\" in \"Hi Ho Hi Ho\" appears "+freq+" times. ");
-	    if(-1 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+
+	    //Black box test
+	    System.out.println("Black box test");
 
 	    //TARGET's length is zero
 	    myObject = new s4.B193355.Frequencer();
 	    myObject.setSpace("Hi Ho Hi Ho".getBytes());
 	    myObject.setTarget("".getBytes());
+	    freq = myObject.frequency();
+	    System.out.print("\"\" in \"Hi Ho Hi Ho\" appears "+freq+" times. ");
+	    if(11 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+
+	    //SPACE's length is zero
+	    myObject = new s4.B193355.Frequencer();
+	    myObject.setSpace("".getBytes());
+	    myObject.setTarget("H".getBytes());
+	    freq = myObject.frequency();
+	    System.out.print("\"H\" in \"\" appears "+freq+" times. ");
+	    if(0 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+
+	    //Otherwise
+	    myObject = new s4.B193355.Frequencer();
+	    myObject.setSpace("Hi Ho Hi Ho".getBytes());
+	    myObject.setTarget("H".getBytes());
+	    freq = myObject.frequency();
+	    System.out.print("\"H\" in \"Hi Ho Hi Ho\" appears "+freq+" times. ");
+	    if(4 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+
+	    //White box test
+	    System.out.println("White box test");
+
+	    //TARGET is not set
+	    myObject = new s4.B193355.Frequencer();
+	    myObject.setSpace("Hi Ho Hi Ho".getBytes());
+	    //myObject.setTarget("H".getBytes());
 	    freq = myObject.frequency();
 	    System.out.print("\"H\" in \"Hi Ho Hi Ho\" appears "+freq+" times. ");
 	    if(-1 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
@@ -58,31 +80,6 @@ public class TestCase {
 	    freq = myObject.frequency();
 	    System.out.print("\"H\" in \"Hi Ho Hi Ho\" appears "+freq+" times. ");
 	    if(-1 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
-
-	    //SPACE's length is zero
-	    myObject = new s4.B193355.Frequencer();
-	    myObject.setSpace("".getBytes());
-	    myObject.setTarget("H".getBytes());
-	    freq = myObject.frequency();
-	    System.out.print("\"H\" in \"Hi Ho Hi Ho\" appears "+freq+" times. ");
-	    if(4 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
-
-	    //Otherwise
-	    myObject = new s4.B193355.Frequencer();
-	    myObject.setSpace("Hi Ho Hi Ho".getBytes());
-	    myObject.setTarget("H".getBytes());
-	    freq = myObject.frequency();
-	    System.out.print("\"H\" in \"Hi Ho Hi Ho\" appears "+freq+" times. ");
-	    if(4 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
-
-	    //White box test
-	    myObject = new s4.B193355.Frequencer();
-	    myObject.setSpace("AAAA".getBytes());
-	    myObject.setTarget("A".getBytes());
-	    freq = myObject.frequency();
-	    System.out.print("\"A\" in \"AAAA\" appears "+freq+" times. ");
-	    if(4 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
-
 	    }
 	catch(Exception e) {
 	    System.out.println("Exception occurred: STOP");
