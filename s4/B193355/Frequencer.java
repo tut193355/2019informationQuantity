@@ -226,10 +226,10 @@ public class Frequencer implements FrequencerInterface{
         // if target_start_end is "Ho ", it will return 6.
         //
         // ここにコードを記述せよ。
-    	System.out.println("Start:");
+    	//System.out.println("Start:");
     	for(int i = 0; i < suffixArray.length; i++){
     		int result = targetCompare(i, start, end);
-    		System.out.println(result);
+    		//System.out.println(result);
     		if(result == 0)
     			return i;
     	}
@@ -261,11 +261,11 @@ public class Frequencer implements FrequencerInterface{
         // if target_start_end is"i", it will return 9 for "Hi Ho Hi Ho".
         //
         //　ここにコードを記述せよ。
-    	System.out.println("End:");
+    	//System.out.println("End:");
     	int pre_result = 1;
     	for(int i = 0; i < suffixArray.length; i++){
     		int result = targetCompare(i, start, end);
-    		System.out.println(result);
+    		//System.out.println(result);
     		if(result == 1 && pre_result == 0){
     			return i;
     		}
