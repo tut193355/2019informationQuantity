@@ -42,31 +42,36 @@ public class InformationEstimator implements InformationEstimatorInterface{
     }
 
     public double estimation(){
-    	boolean [] partition = new boolean[myTarget.length+1];
-    	int np;
-    	np = 1<<(myTarget.length-1);
-    	//あとで消す
-    	//System.out.println("np="+np+" length="+myTarget.length);
-    	/*
-    	double value = (double) 0.0;
-    	double [] temp =  new double[myTarget.length];
+    	double value = Double.MAX_VALUE;
+    	double value1 = (double) 0.0;
+    	double [] temp = new double[myTarget.length];
     	int start = 0;
     	int end = start;
 
     	for(int i=0; i<myTarget.length; i++) {
-    		end = i;
-    		temp[i] = Double.MAX_VALUE;
+    		end = i+1;
+    		temp[i] = 0;
     		for(int j=0; j<i+1; j++) {
     			start = j;
     			myFrequencer.setTarget(subBytes(myTarget, start, end));
-    			value = iq(myFrequencer.frequency());
-    			if(start != 0) value = temp[j-1];
-    			if(temp[i] > value) temp[i] = value;
+    			if(start == 0) {
+    				temp[i] = iq(myFrequencer.frequency());
+    				value1 = temp[i];
+    			}
+    			else value1 = temp[j-1] + iq(myFrequencer.frequency());
+    			if(i == myTarget.length-1) {
+    				if(value1 < value) value = value1;
+    			}
     		}
     	}
 
-    	return temp[myTarget.length-1];
-    	*/
+    	return value;
+
+    	/*
+    	boolean [] partition = new boolean[myTarget.length+1];
+    	int np;
+    	np = 1<<(myTarget.length-1);
+
     	double value = Double.MAX_VALUE; // value = minimum of each "value1".
 
     	for(int p=0; p<np; p++) { // There are 2^(n-1) kinds of partitions.
@@ -75,7 +80,7 @@ public class InformationEstimator implements InformationEstimatorInterface{
     		// a b c d e f g   : myTarget
     		// T F T F F T F T : partition:
     		partition[0] = true; // I know that this is not needed, but..
-    		for(int i=0; i<myTarget.length -1;i++) {
+    		for(int i=0; i<myTarget.length-1; i++) {
     			partition[i+1] = (0 !=((1<<i) & p));
     		}
     		partition[myTarget.length] = true;
@@ -97,13 +102,13 @@ public class InformationEstimator implements InformationEstimatorInterface{
             	value1 = value1 + iq(myFrequencer.frequency());
             	start = end;
             }
-             //System.out.println(" "+ value1);
+            System.out.println(" "+ value1);
 
             // Get the minimal value in "value"
             if(value1 < value) value = value1;
     	}
     	return value;
-
+    	*/
     }
 
     public static void main(String[] args) {
@@ -113,9 +118,7 @@ public class InformationEstimator implements InformationEstimatorInterface{
     	myObject.setSpace("3210321001230123".getBytes());
     	myObject.setTarget("0".getBytes());
     	value = myObject.estimation();
-
     	System.out.println(">0 "+value);
-
     	myObject.setTarget("01".getBytes());
     	value = myObject.estimation();
     	System.out.println(">01 "+value);
@@ -125,7 +128,6 @@ public class InformationEstimator implements InformationEstimatorInterface{
     	myObject.setTarget("00".getBytes());
     	value = myObject.estimation();
     	System.out.println(">00 "+value);
-
     }
 }
 

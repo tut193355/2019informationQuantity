@@ -176,23 +176,15 @@ public class Frequencer implements FrequencerInterface{
 
     	int value = 0;
     	while(true){
-    		//System.out.println("j:"+ j);
-    		//System.out.println("k:" + k);
     		if(k == j) {
-
     			break;
     		}
 
-    		if(k - j > 0 && suffixArray[i] + value >= mySpace.length)
-    			return -1;
-    		/*if(suffixArray.length >= (k - j))
-    			break;
-    			*/
+    		if(k - j > 0 && suffixArray[i] + value >= mySpace.length) return -1;
 
-    		if(mySpace[suffixArray[i] + value] > myTarget[j])
-    			return 1;
-			else if(mySpace[suffixArray[i] + value] < myTarget[j])
-				return -1;
+    		if(mySpace[suffixArray[i] + value] > myTarget[j]) return 1;
+
+			else if(mySpace[suffixArray[i] + value] < myTarget[j]) return -1;
 			else{
 				j++;
 				value++;
@@ -225,16 +217,30 @@ public class Frequencer implements FrequencerInterface{
         // Assuming the suffix array is created from "Hi Ho Hi Ho",
         // if target_start_end is "Ho ", it will return 6.
         //
+
         // ここにコードを記述せよ。
-    	//System.out.println("Start:");
+    	//2分探索
+    	int left = 0;
+    	int right = suffixArray.length; //上限 + 1
+    	int result = 0;
+
+    	while(left < right) {
+    		int mid = (left + right) / 2;
+    		result = targetCompare(mid, start, end);
+    		if (result == -1) left = mid + 1;
+    		else right = mid;
+    	}
+    	return left;
+
+    	/*
     	for(int i = 0; i < suffixArray.length; i++){
     		int result = targetCompare(i, start, end);
     		//System.out.println(result);
     		if(result == 0)
     			return i;
     	}
-
         return suffixArray.length; //このコードは変更しなければならない。
+        */
     }
 
     private int subByteEndIndex(int start, int end) {
@@ -260,8 +266,22 @@ public class Frequencer implements FrequencerInterface{
         // Assuming the suffix array is created from "Hi Ho Hi Ho",
         // if target_start_end is"i", it will return 9 for "Hi Ho Hi Ho".
         //
+
         //　ここにコードを記述せよ。
-    	//System.out.println("End:");
+    	//2分探索
+    	int left = 0;
+    	int right = suffixArray.length; //上限 + 1
+    	int result = 0;
+
+    	while(left < right) {
+    		int mid = (left + right) / 2;
+    		result = targetCompare(mid, start, end);
+    		if (result == 0 || result == -1) left = mid + 1;
+    		else right = mid;
+    	}
+    	return left;
+
+    	/*
     	int pre_result = 1;
     	for(int i = 0; i < suffixArray.length; i++){
     		int result = targetCompare(i, start, end);
@@ -271,8 +291,8 @@ public class Frequencer implements FrequencerInterface{
     		}
     		pre_result = result;
     	}
-
         return suffixArray.length; // この行は変更しなければならない、
+		*/
     }
 
 
