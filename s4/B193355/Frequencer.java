@@ -60,12 +60,27 @@ public class Frequencer implements FrequencerInterface{
         // if suffix_i = suffix_j, it returns 0;
 
         // ここにコードを記述せよ
+    	/*
         if(i > j)
             return 1;
         else if(i < j)
             return -1;
         else
             return 0;
+        */
+
+    	int value = 0;
+
+    	while(i + value < mySpace.length && j + value <mySpace.length) {
+    		if((int)mySpace[i + value] < (int)mySpace[j + value]) return -1;
+    		else if((int)mySpace[i + value] > (int)mySpace[j + value]) return 1;
+    		value++;
+
+    		if(i + value == mySpace.length && j + value == mySpace.length) return 0;
+    		else if(i + value == mySpace.length) return -1;
+    		else if(j + value == mySpace.length) return 1;
+    	}
+    	return 0;
     }
 
     public void setSpace(byte []space) {
@@ -79,6 +94,9 @@ public class Frequencer implements FrequencerInterface{
         }
         // ここに、int suffixArrayをソートするコードを書け。
 
+        quickSort(suffixArray, 0, suffixArray.length - 1);
+
+        /*
         //suffixArrayの並び順を反転
         for(int i = 0; i < (suffixArray.length)/2; i++){
         	int t = suffixArray[i];
@@ -114,7 +132,33 @@ public class Frequencer implements FrequencerInterface{
         		}
         	}
         }
+        */
+
         // 順番はsuffixCompareで定義されるものとする。
+    }
+
+    //クイックソート
+    private void quickSort(int[] a, int left, int right) {
+    	if(left <= right) {
+    		int pivot = right; //軸要素の再設定
+    		int left1 = left;
+    		int right1 = right;
+    		int value = 0;
+
+    		while(left1 <= right1) {
+    			while(suffixCompare(suffixArray[left1], suffixArray[pivot]) == -1) left1++;
+    			while(suffixCompare(suffixArray[right1], suffixArray[pivot]) == 1) right1--;
+    			if(left1 <= right1) {
+    				int swap = a[left1];
+    				a[left1] = a[right1];
+    				a[right1] = swap;
+    				left1++;
+    				right1--;
+    			}
+    		}
+    	quickSort(a, left, right1);
+    	quickSort(a, left1, right);
+    	}
     }
 
     // Suffix Arrayを用いて、文字列の頻度を求めるコード
@@ -179,7 +223,6 @@ public class Frequencer implements FrequencerInterface{
     		if(k == j) {
     			break;
     		}
-
     		if(k - j > 0 && suffixArray[i] + value >= mySpace.length) return -1;
 
     		if(mySpace[suffixArray[i] + value] > myTarget[j]) return 1;
